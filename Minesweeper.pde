@@ -109,13 +109,15 @@ public class MSButton
       if(!isWon() && !gameLost) {
         if (mouseButton == LEFT && !flagged) clicked = true;
         if (mouseButton == RIGHT && !clicked) flagged = !flagged;
-        else if (!flagged && mines.contains(this)) displayLosingMessage();
-        else if (countMines(myRow,myCol) > 0) this.setLabel(countMines(myRow,myCol));
-        else {
-          for(int r = myRow-1; r <= myRow+1; r++) {
-            for(int c = myCol-1; c <= myCol+1; c++) {
-              if (isValid(r, c) && !buttons[r][c].clicked) buttons[r][c].mousePressed();
-            }
+        else if (!flagged) {
+          if (mines.contains(this)) displayLosingMessage();
+          else if (countMines(myRow,myCol) > 0) this.setLabel(countMines(myRow,myCol));
+          else {
+            for(int r = myRow-1; r <= myRow+1; r++) {
+              for(int c = myCol-1; c <= myCol+1; c++) {
+                if (isValid(r, c) && !buttons[r][c].clicked) buttons[r][c].mousePressed();
+              }
+            }  
           }
         }
       }
